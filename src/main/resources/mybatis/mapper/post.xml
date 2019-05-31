@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+ 
+	<insert id="insert" parameterType="postvo">
+		<![CDATA[
+		insert into post (category_no,title,content,reg_date) values (#{category_no},#{title},#{content},now())		]]>
+	</insert>
+	
+	<insert id="writePost" parameterType="postvo">
+		<![CDATA[
+		insert into post (category_no,title,content,reg_date) values (#{category_no},#{title},#{content},now())		]]>
+	</insert>
+	
+ 	<select id="getPostList" parameterType="map" resultType="postvo">
+   		<![CDATA[ select p.no,p.category_no,p.title,p.content,p.reg_date,c.name
+  		 from post p,category c
+  		  where p.category_no=c.no and c.blog_id=#{blogId}]]>
+  		 
+ 	  <choose> 
+ 	  	<when test=" categoryNo>-1 ">   
+ 	  		<![CDATA[and p.category_no=#{categoryNo} ]]>
+   		   </when>
+	  </choose>  
+  		<![CDATA[  order by p.reg_date desc ]]>
+  		
+    	</select>
+	<select id="getPostListByPostNo" parameterType="int" resultType="postvo" >
+		<![CDATA[ select a.no,a.category_no,a.title,a.content,a.reg_date
+		 from post a ,( select * from post p  where  p.no=#{postNo}) b
+			 where b.category_no=a.category_no 
+			order by a.reg_date desc  ]]>
+		</select>
+	<select id="getPostByNo" parameterType="int" resultType="postvo" >
+		<![CDATA[ select * from post where no=#{no} ]]>
+		</select>
+	<delete id="deleteAllPostByCategoryNo" parameterType="int"   >
+		<![CDATA[ delete  from post where category_no=#{no} ]]>
+		</delete>
+		
+</mapper>
