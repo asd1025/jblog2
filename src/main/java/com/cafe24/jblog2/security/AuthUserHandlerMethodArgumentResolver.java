@@ -14,7 +14,7 @@ import com.cafe24.jblog2.vo.UsersVo;
 
 
 public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
-
+	// 요청에 대한 모든 파라미터에 대한 검사 
 
 	@Override
 	public Object resolveArgument(MethodParameter parameter, 
