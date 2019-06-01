@@ -1,5 +1,6 @@
 package com.cafe24.jblog2.security;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,7 +27,7 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		
 		UsersVo authUser= usersService.getUser(usersVo);
 		if (authUser == null) {
-			response.sendRedirect(request.getContextPath()+"/user/login" );
+   			response.sendRedirect(request.getContextPath() );
 			return false;
 		}
 		
@@ -37,4 +38,6 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter {
 		
 		return false;
 	}
+	
+	
 }

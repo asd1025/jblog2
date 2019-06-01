@@ -67,7 +67,7 @@
       <property name="maxUploadSize" value="52428800" />
     
       <!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
-     <!-- property name="maxInMemorySize" value="52428800" /-->
+     <property name="maxInMemorySize" value="52428800"/>
 
      <!-- defaultEncoding -->
      <property name="defaultEncoding" value="utf-8" />
@@ -105,7 +105,14 @@
         	<mvc:exclude-mapping path="/user/logout"/>
         	<mvc:exclude-mapping path="/assets/**"/>
     	<bean class="com.cafe24.jblog2.security.AuthInterceptor" />
-        </mvc:interceptor>
+         </mvc:interceptor>
+        <mvc:interceptor>
+        	<mvc:mapping path="/{id}" /> 
+        	<mvc:exclude-mapping path="/user/auth"/>
+        	<mvc:exclude-mapping path="/user/logout"/>
+        	<mvc:exclude-mapping path="/assets/**"/>
+    	<bean class="com.cafe24.jblog2.security.BlogInterceptor" />
+          </mvc:interceptor>
     </mvc:interceptors>  
     
 	<!-- 빈설정을 annotation으로 하겠다(@controller에 auto scanning) -->

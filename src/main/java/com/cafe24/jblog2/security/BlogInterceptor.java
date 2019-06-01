@@ -17,7 +17,10 @@ import com.cafe24.jblog2.vo.BlogVo;
 import com.cafe24.jblog2.vo.UsersVo;
 
  
-public class AuthInterceptor  extends HandlerInterceptorAdapter{
+public class BlogInterceptor  extends HandlerInterceptorAdapter{
+	@Autowired
+	BlogService blogService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -25,36 +28,21 @@ public class AuthInterceptor  extends HandlerInterceptorAdapter{
 		if(handler instanceof HandlerMethod == false) {
 			return true;
 		}
- 
+		System.out.println("BLOG INTERCEPTOR ~~~~~~~~~~~~~~~~~~~~~~");
 		HandlerMethod handlerMethod=(HandlerMethod) handler;
 		
 		Auth auth= handlerMethod.getMethodAnnotation(Auth.class);
- 		
-		if(auth==null) {return true;}
- 		HttpSession session= request.getSession();
-		if(session==null) {// 인증이 안되어 있네
-			response.sendRedirect(request.getContextPath()+"/user/login");
-			return false;
-		}
-		
-		UsersVo authUser= (UsersVo) session.getAttribute("authUser");
-		if(authUser==null) { //인증이 안되어 있네
-			response.sendRedirect(request.getContextPath()+"/user/login");
-			return false;
-		}
-		System.out.println("AUTH    INTERCEPTOR ~~~~~~~~~~~~~~~~~~~~~~");
-
 		// controller의 @pathVariable 을 가져오는 방법  
-		Map<?,?> map= (Map<?, ?>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-	  	String id=(String) map.get("id");
- 		String role=auth.role().toString();
- 		
- 		if(role.equals("ADMIN")) {
-			if(!authUser.getId().equals(id)) {
-				response.sendRedirect(request.getContextPath()+"/"+id);
-				return false;
-			}
-		} 
+				Map<?,?> map= (Map<?, ?>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+			  	String id=(String) map.get("id");
+  		// 존재하는 블로그 주소인가 체크 
+		BlogVo blogVo= new BlogVo();
+		blogVo.setId(id);
+		BlogVo authBlog= blogService.getBlog(id);
+	     if (authBlog == null) {
+		 	response.sendRedirect(request.getContextPath() );
+		 return false;
+		}
 		
 		return true;
 	}

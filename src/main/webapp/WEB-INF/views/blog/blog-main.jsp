@@ -57,17 +57,21 @@
 			<c:otherwise>${blogVo.title} </c:otherwise>
 			</c:choose>
 			</h1>
+			
 			<ul>
-			<c:choose>
-			<c:when test="${blogVo.id eq authUser.id}">
+ 			<c:choose>
+			<c:when test="${not empty authUser}">
 				<li><a href="${pageContext.servletContext.contextPath}/user/logout">로그아웃</a></li>
-				<li><a href="${pageContext.servletContext.contextPath}/${authUser.id}/admin/basic">블로그 관리</a></li>
+			<c:if test="${blogVo.id eq authUser.id}">
+				<li><a href="${pageContext.servletContext.contextPath}/${authUser.id}/admin/basic">블로그 관리</a></li></c:if>
+			<li> <b>${authUser.id}</b>님 반갑습니다! </li>
 			</c:when>
 			<c:otherwise>
 				<li><a href="${pageContext.servletContext.contextPath}/user/login">로그인</a></li>
 			</c:otherwise>
 			</c:choose>
 			</ul>
+			
 		</div>
 		
 		<div id="wrapper">

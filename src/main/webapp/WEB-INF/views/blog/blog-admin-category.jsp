@@ -109,9 +109,17 @@ function deleteCategory(no){
 		<div id="header">
 			<h1>Spring 이야기</h1>
 			<ul>
-				<li><a href="">로그인</a></li>
-				<li><a href="">로그아웃</a></li>
-				<li><a href="">블로그 관리</a></li>
+ 			<c:choose>
+			<c:when test="${not empty authUser}">
+				<li><a href="${pageContext.servletContext.contextPath}/user/logout">로그아웃</a></li>
+			<c:if test="${blogVo.id eq authUser.id}">
+				<li><a href="${pageContext.servletContext.contextPath}/${authUser.id}/admin/basic">블로그 관리</a></li></c:if>
+			<li> <b>${authUser.id}</b>님 반갑습니다! </li>
+			</c:when>
+			<c:otherwise>
+				<li><a href="${pageContext.servletContext.contextPath}/user/login">로그인</a></li>
+			</c:otherwise>
+			</c:choose>
 			</ul>
 		</div>
 		

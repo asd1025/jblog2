@@ -23,7 +23,6 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 			WebDataBinderFactory binderFactory) throws Exception {
 		
 		
-		// 내가 지원하는 애가 아니야 다른 애로 셋팅해줘
 		if(supportsParameter(parameter)==false) {
 			return WebArgumentResolver.UNRESOLVED; 
 		}
@@ -43,9 +42,6 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 			return false;
 		}
 		
-		// 
-		// class 객체를 비교하는 것. 같은 클래스면 하나만 있는 것
-		//파라미터 타입이 UserVo
 		if(parameter.getParameterType().equals(UsersVo.class)==false){
 			return false;
 		}
