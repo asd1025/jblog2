@@ -17,36 +17,40 @@ public class PostService {
 	private PostDao postDao;
 
 	
-	
-	// 예상되지않은값에대한 처리 해줘야함!!!
-	public List<PostVo> getPostList(String pathNo1, Optional<Integer> pathNo2, Optional<Integer> pathNo3) {
-		String blogId=pathNo1;
+	/* 	public List<PostVo> getPostList(String id, Optional<Integer> pathNo2, Optional<Integer> pathNo3) {
+		String blogId=id;
 		int categoryNo=-1;
 		int postNo=-1;
  		if(pathNo2.isPresent()) categoryNo= (pathNo2.get());
  		if(pathNo3.isPresent()) postNo= (pathNo3.get());
  		List<PostVo> list=null;
  		System.out.println("**************postService getPostList "+blogId+"   "+categoryNo+"  "+postNo);
- 		if(postNo!=-1) { // 글번호가 정해져있어, 글을 기준으로 이전글 리스트
- 			list=postDao.getPostListByPostNo(postNo);
- 		}else { // 카테고리번호의 유무에 따라 전체글 또는 카테고리내 최신글 리스트
- 			list=postDao.getPostList(blogId,categoryNo);
- 			System.out.println("**************postService getPostList");
+ 		//if(categoryNo!=-1) { 
+ 			// 카테고리 번호가 정해져 있음. 글번호가  없다면 해당  카테고리 내의 전체글이 나온다
+ 			list=postDao.getRecentPostListByCategory(blogId,categoryNo);
+ 			
+ 		//}else { // 카테고리번호가 없어  전체글로 보여주기 
+ 		//	list=postDao.getPostListAll(id);
+ 		//	System.out.println("**************postService getPostLis 카카테고리번호가 없는 경우 ( 포스트 번호는 상관 없다 ) ");
  			for (PostVo postVo : list) {
 				System.out.println(postVo);
 			}
- 		}
+ 		//}
 		return list;
 
 	}
 
-
-
-	public PostVo getPostByNo(int no) {
-		return postDao.getPostByNo(no);
+	public List<PostVo> getPostList(String id) {
+		List<PostVo> list=postDao.getRecentPostListByCategory(id,-1);
+		return list;
 	}
 
 
+	public PostVo getPostByNo(int no,String blog_id) {
+		return postDao.getPostByNo(no,blog_id);
+	}
+
+*/
 
 	public void deleteAllPostByCategoryNo(int no) {
 		postDao.deleteAllPostByCategoryNo(no);
@@ -58,5 +62,19 @@ public class PostService {
 		postDao.writePost(postVo);
 
 	}
+
+	public List<PostVo> getRecentlyAllList(String id) {
+		return postDao.getRecentlyAllList(id);
+	}
+
+	public List<PostVo> getAllListByCategory(String id, Optional<Integer> categoryNo) {
+		return postDao.getAllListByCategory(id,categoryNo.get());
+	}
+
+	public  PostVo getPostByNo(String id,int categoryNO, int postNO) {
+		return   postDao.getPostByNo(id,categoryNO,postNO);
+	}
+
+
 
 }

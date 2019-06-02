@@ -10,10 +10,11 @@
   <script
 	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
 <script>
-	function showPost(no ){
-		 
+ 
+   	function showPost(no,category_no){
+		 console.log(no+" "+category_no);
 		  $.ajax({
-				 url:"${pageContext.request.contextPath}/${blogVo.id}/post?no="+no,
+				 url:"${pageContext.request.contextPath}/${blogVo.id}/post?no="+no+"&category_no="+category_no,
 				 type:"get",
 				 dataType:"json",
 				 data:"",
@@ -23,19 +24,15 @@
 						return;
 					}
 					if(response.data!=null){
-					 var postVo=response.data;
-						console.log(postVo.title) ;
-						
-					 $('#postTitle').text(postVo.title);
-					 $('#postContent').text(postVo.content);
-					 
+					 var firstPost=response.data.firstPost;
+					 $('#postTitle').text(firstPost.title);
+					 $('#postContent').text(firstPost.content);
 						return;
 					}
 				 },
-				error:function(xhr,error){
-					console.log("error:"+error);
+				error:function(xhr,error){ 
+					console.log(error);
 				 }		
-				 
 	});
 	}
  
@@ -78,19 +75,19 @@
 			<div id="content">
 				<div class="blog-content">
 					<c:choose>
-						<c:when test="${postVo[0] eq null}"> <h4>작성된 글이 없습니다</h4></c:when>
-						<c:otherwise>  <h4 id="postTitle">${postVo[0].title}</h4>	</c:otherwise>
+						<c:when test="${firstVo eq null}"> <h4>작성된 글이 없습니다</h4></c:when>
+						<c:otherwise>  <h4 id="postTitle">${firstVo.title}</h4>	</c:otherwise>
 					</c:choose>
 					<p id="postContent">
-						${postVo[0].content}
+						${firstVo.content}
 					</p>
 				</div>
 				
 				
 				<!--  Post List -->
 				<ul class="blog-list">
- 					<c:forEach items="${postVo}" var='vo' begin="1" >
-						<li><a href="javascirpt:void(0);" onclick="showPost(${vo.no});" return false;   >${vo.title}</a>
+ 					<c:forEach items="${postVo}" var='vo' >
+						<li><a href="javascirpt:void(0);" onclick="showPost(${vo.no},${vo.category_no });" return false;   >${vo.title}</a>
 							<span> <fmt:parseDate var="dateString" value="${vo.reg_date}" pattern="yyyy-MM-dd" />
 							 <fmt:formatDate  pattern="yyyy/MM/dd" value="${dateString}" /></span>
 						</li>

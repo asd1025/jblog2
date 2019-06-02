@@ -30,26 +30,33 @@ public class PostDao {
 //	public PostVo getPostByPostNo(int no) {
 //		return  sqlSession.selectOne("post.getPostByPostNo",no);
 //	}
-	/**
-	 *  카테고리가 정해지면, 카테고리 내 최신글 리스트
-	 *  카테고리가 정해지지 않는 다면, 전체글의 최신글 리스트
+	/** 
+	 *   최신글들을 보여주는 리스트  (전체 )
 	 * */
-	public List<PostVo> getPostList(String blogId, int categoryNo) {
-		  Map<String, Object> map=new HashMap<String, Object>();
-		  map.put("blogId", blogId);
-		  map.put("categoryNo", categoryNo );
-		  return  sqlSession.selectList("post.getPostList",map);
+	private Map<String, Object> map;
+	
+	public List<PostVo> getRecentlyAllList(String blogId) {
+		  return  sqlSession.selectList("post.getRecentlyAllList",blogId);
 	}
 	
 	/**
-	 *  글 번호가 속해있는 카테고리 내에, 그 글의 시점을 기준으로 이전글들의 리스트
+	 *  해당 글이 속한  카테고리의 글들을 보여주는 리스트
 	 * */
-	public List<PostVo> getPostListByPostNo(int postNo) {
-		  return  sqlSession.selectList("post.getPostListByPostNo",postNo);
+	public List<PostVo> getAllListByCategory(String blog_id,int category_no) {
+		map=new HashMap<String, Object>();
+		  map.put("blog_id", blog_id);
+		  map.put("category_no", category_no );
+		  return  sqlSession.selectList("post.getAllListByCategory",map);
 	}
-
-	public PostVo getPostByNo(int no) {
-		return sqlSession.selectOne("post.getPostByNo",no);
+	/**
+	 *  해당 카테고리에 있는 존재하는 포스트라면 보여주기
+	 * */
+	public PostVo getPostByNo(String blog_id,int category_no ,int no) {
+		map=new HashMap<String, Object>();
+		  map.put("blog_id", blog_id);
+		  map.put("no", no );
+		  map.put("category_no", category_no );
+		return sqlSession.selectOne("post.getPostByNo",map);
 	}
 
 	public void deleteAllPostByCategoryNo(int no) {
