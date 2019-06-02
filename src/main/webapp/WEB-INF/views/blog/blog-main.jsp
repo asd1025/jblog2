@@ -104,7 +104,7 @@
 		<div id="extra">
 			<div class="blog-logo">
 			<c:choose>
-			<c:when test="${blogVo.logo eq null}"><td><img src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg"></td>    </c:when>
+			<c:when test="${blogVo.logo eq null}"><td><img src="${pageContext.request.contextPath}/assets/img/images/spring-logo.jpg"></td>    </c:when>
 			<c:otherwise><td><img src="${pageContext.request.contextPath}${blogVo.logo}"></td>     </c:otherwise>
 			</c:choose>
 			</div>

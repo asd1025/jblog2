@@ -25,13 +25,13 @@ public class AuthInterceptor  extends HandlerInterceptorAdapter{
 		if(handler instanceof HandlerMethod == false) {
 			return true;
 		}
- 
+
 		HandlerMethod handlerMethod=(HandlerMethod) handler;
 		
 		Auth auth= handlerMethod.getMethodAnnotation(Auth.class);
  		
 		if(auth==null) {return true;}
- 		HttpSession session= request.getSession();
+  		HttpSession session= request.getSession();
 		if(session==null) {// 인증이 안되어 있네
 			response.sendRedirect(request.getContextPath()+"/user/login");
 			return false;

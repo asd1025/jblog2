@@ -20,6 +20,12 @@ public class UsersService {
 	private CategoryDao categoryDao;
 	
 	 
+	public boolean existId(UsersVo usersVo) {
+		//if("assets".equals(usersVo.getId())) return true;
+		//if("admin".equals(usersVo.getId())) return true;
+		//if("users".equals(usersVo.getId())) return true;
+		return usersDao.existId(usersVo);
+	}
 
 	public void join(UsersVo vo) {
 		  usersDao.insert(vo);

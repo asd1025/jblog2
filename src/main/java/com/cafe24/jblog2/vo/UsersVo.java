@@ -1,8 +1,21 @@
 package com.cafe24.jblog2.vo;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class UsersVo {
+	
+@NotEmpty
+@Length(min=3,max=10)
+@Pattern(regexp ="^(?!assets|admin|user).*$")
 private String id;
+@NotEmpty
+@Length(min=2,max=10)
 private String name;
+@NotEmpty
+@Length(min=3,max=10)
 private String password;
 private String reg_date;
 public String getId() {

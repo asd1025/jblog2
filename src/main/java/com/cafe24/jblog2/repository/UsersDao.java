@@ -25,4 +25,9 @@ public class UsersDao {
 		sqlSession.insert("users.insert",vo);
 	}
 
+	public boolean existId(UsersVo vo) {
+		
+		return (sqlSession.selectOne("users.existId",vo)==null)?false:true;
+	}
+
 }

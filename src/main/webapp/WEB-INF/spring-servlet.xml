@@ -45,6 +45,7 @@
 	<!-- 맵핑시 실제 컴퓨터 경로로 매칭 -->
  	<!-- the mvc resources tag does the magic -->
 	<mvc:resources mapping="/assets/images/**" location="file:/jblog-uploads/" />
+	<mvc:resources mapping="/assets/img/images/**" location="/assets/img/images/" />
 	
 	<!-- . 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->
 	<mvc:default-servlet-handler />
@@ -74,14 +75,14 @@
 
 </bean>
 	<!--  . MessageSource -->
-	<!-- <bean id="messageSource"
+	  <bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>messages/messages_ko</value>
 			</list>
 		</property>
-	</bean> -->
+	</bean> 
     
 	
 	<!-- Interceptors -->
@@ -103,6 +104,7 @@
         	<mvc:mapping path="/**" /> 
         	<mvc:exclude-mapping path="/user/auth"/>
         	<mvc:exclude-mapping path="/user/logout"/>
+        	        	<mvc:exclude-mapping path="/user/logout"/>
         	<mvc:exclude-mapping path="/assets/**"/>
     	<bean class="com.cafe24.jblog2.security.AuthInterceptor" />
          </mvc:interceptor>
