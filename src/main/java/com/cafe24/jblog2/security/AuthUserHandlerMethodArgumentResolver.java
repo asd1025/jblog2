@@ -21,7 +21,7 @@ public class AuthUserHandlerMethodArgumentResolver implements HandlerMethodArgum
 			ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, 
 			WebDataBinderFactory binderFactory) throws Exception {
-		
+		System.out.println("AuthUserHandlerMethodArgumentResolver");
 		
 		if(supportsParameter(parameter)==false) {
 			return WebArgumentResolver.UNRESOLVED; 
