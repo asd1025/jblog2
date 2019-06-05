@@ -11,6 +11,7 @@
 <script>
 $(function(){
 	getListCategory();
+	getBlogInfo();
 	
 });
 function deleteCategory(no){
@@ -95,6 +96,30 @@ function deleteCategory(no){
 				 }		
 		  });
 	}
+	function getBlogInfo(){
+ 		 
+		  $.ajax({
+				 url:"${pageContext.request.contextPath}/${authUser.id}/getBlogInfo",
+				 type:"get",
+				 dataType:"json",
+				 data:"",
+				 success:function(response){
+					if(response.result!="success"){
+						console.error(response.message);
+						return;
+					}
+					if(response.data!=null){
+						var title=response.data.title;
+						console.log(title);
+						$('#header').append("<h1>"+title+"</h1>");
+ 						return;
+					}
+				 },
+				error:function(xhr,error){
+					console.log(error);
+				 }		
+		  });
+	}
 
 		  
 	
@@ -107,8 +132,7 @@ function deleteCategory(no){
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>Spring 이야기</h1>
-			<ul>
+ 			<ul>
  			<c:choose>
 			<c:when test="${not empty authUser}">
 				<li><a href="${pageContext.servletContext.contextPath}/user/logout">로그아웃</a></li>

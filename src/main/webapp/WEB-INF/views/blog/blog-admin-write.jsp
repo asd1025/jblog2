@@ -8,12 +8,50 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JBlog</title>
 <Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+ <script
+	src="${pageContext.servletContext.contextPath}/assets/js/jquery/jquery-1.9.0.js"></script>
+<script>
+$(function(){
+	getBlogInfo();
+});
+ 
+	function getBlogInfo(){
+ 		 
+		  $.ajax({
+				 url:"${pageContext.request.contextPath}/${authUser.id}/getBlogInfo",
+				 type:"get",
+				 dataType:"json",
+				 data:"",
+				 success:function(response){
+					if(response.result!="success"){
+						console.error(response.message);
+						return;
+					}
+					if(response.data!=null){
+						var title=response.data.title;
+						console.log(title);
+						$('#header').append("<h1>"+title+"</h1>");
+ 						return;
+					}
+				 },
+				error:function(xhr,error){
+					console.log(error);
+				 }		
+		  });
+	}
+
+		  
+	
+ 
+
+</script> 
+<title>JBlog</title>
+<Link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 </head>
 <body>
 	<div id="container">
 		<div id="header">
-			<h1>Spring 이야기</h1>
-			<ul>
+ 			<ul>
  			<c:choose>
 			<c:when test="${not empty authUser}">
 				<li><a href="${pageContext.servletContext.contextPath}/user/logout">로그아웃</a></li>
@@ -30,8 +68,8 @@
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="">기본설정</a></li>
-					<li><a href="">카테고리</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.servletContext.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
 					<li class="selected">글작성</li>
 				</ul>
 				<form action="${pageContext.servletContext.contextPath}/${authUser.id}/admin/write" method="post">

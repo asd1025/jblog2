@@ -53,6 +53,16 @@ public class BlogController {
 	    map.put("blogVo", blogVo);
 		return   JSONResult.success(map);
 	}
+	// 블로그 정보   ajax
+	@ResponseBody
+	@RequestMapping("/getBlogInfo")
+	public JSONResult getPostByNo(@PathVariable(value="id") String id) {
+		//Map<Object,Object> map=new HashMap<Object, Object>();
+		BlogVo blogVo=blogService.getBlog(id);
+		System.out.println("getCategoryList AJAX");
+		//map.put("blogVo", blogVo);
+		return   JSONResult.success(blogVo);
+	}
 	
 	// 메인에 접근 
 	@RequestMapping(value= {""})
@@ -122,6 +132,8 @@ public class BlogController {
 		model.addAttribute("blogVo",blogVo);
  		return "blog/blog-main";
 	}
+
+	 
 	
 	
 }
