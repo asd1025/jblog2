@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<img src="${pageContext.servletContext.contextPath}/assets/images/404_img.gif"
+<img src="${pageContext.servletContext.contextPath}/assets/img/images/404_img.gif"
 style="min-height: 100%; min-width: 100%;"></src>
 </body>
 </html>

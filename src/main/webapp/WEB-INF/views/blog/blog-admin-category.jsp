@@ -130,7 +130,8 @@ function deleteCategory(no){
 					<li class="selected">카테고리</li>
 					<li><a href="${pageContext.servletContext.contextPath}/${authUser.id}/admin/write">글작성</a></li>
 				</ul>
- 		      	<table class="admin-cat" id="categorytable">
+				SESSION검사:: ${authUser }
+		      	<table class="admin-cat" id="categorytable">
 		      		<tr>
 		      			<th>번호</th>
 		      			<th>카테고리명</th>
