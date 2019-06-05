@@ -67,6 +67,7 @@ public class BlogController {
 		model.addAttribute("categoryVo",categoryVo);
 		model.addAttribute("postVo",postVo);
 		model.addAttribute("blogVo",blogVo);
+		if(postVo.size()!=0)
 		model.addAttribute("firstVo",postVo.get(0));
 		return "blog/blog-main";
 	}
